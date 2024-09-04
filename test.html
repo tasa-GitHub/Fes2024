@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>テスト</title>
+  </head>
+  <body>
+    <button onclick="captureImage()">Capture Image</button>
+    <canvas style="width: 100vw; height: 100vh" id="canvas"></canvas>
+    
+    <script>
+      function captureImage() {
+        const video = document.createElement("video");
+        const canvas = document.getElementById("canvas");
+        const context = canvas.getContext("2d");
+
+        navigator.mediaDevices
+          .getUserMedia({ video: true })
+          .then((stream) => {
+            video.srcObject = stream;
+            video.onloadedmetadata = () => {
+              video.play();
+              context.drawImage(video, 0, 0, canvas.width, canvas.height);
+              const image = canvas.toDataURL("image/png");
+              // Use the captured image as needed
+              console.log(image);
+            };
+          })
+          .catch((error) => {
+            console.error("Error accessing camera:", error);
+          });
+      }
+    </script>
+  </body>
+</html>
