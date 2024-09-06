@@ -100,7 +100,10 @@
 
       const $video = document.querySelector("video");
       navigator.mediaDevices
-        .getUserMedia({ video: {facingMode: {exact: "environment"} }, audio: false })
+        .getUserMedia({
+          video: { facingMode: { exact: "environment" } },
+          audio: false,
+        })
         .then((stream) => ($video.srcObject = stream))
         .catch((err) => alert(`${err.name} ${err.message}`));
 
@@ -147,6 +150,8 @@
         var height = video.videoHeight;
         var img = new Image();
         img.src = "image.png";
+        var logo = new Image();
+        logo.src = "logo.png";
 
         if (width && height) {
           //videoのサイズをキャンバスにセット
@@ -154,7 +159,8 @@
           resizedCanvas.height = height;
           //キャンバスにvideoをコピー
           resizedContext.drawImage(video, 0, 0, width, height);
-          resizedContext.drawImage(img, width / 2, height / 2, 200, 150);
+          resizedContext.drawImage(logo, width - 160, 0, 160, 80);
+          resizedContext.drawImage(img, width - 80, height - 120, 70, 110);
 
           return resizedCanvas.toDataURL("image/png");
         }
